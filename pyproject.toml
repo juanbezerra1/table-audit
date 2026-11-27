@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "table-audit"
+version = "0.1.0"
+description = "A small command-line auditor for data tables: duplicates, impossible values, placeholders for missing data, and leakage between a training file and a test file. CSV in, a report out, no dependencies."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Juan Bezerra" }]
+keywords = ["data-quality", "csv", "data-validation", "data-leakage", "machine-learning", "cli", "profiling", "no-dependencies"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+# hatchling is the build backend: tests/test_packaging.py uses it to build the wheel and look inside.
+dev = ["pytest>=7.4", "hatchling>=1.25", "ruff>=0.5", "mypy>=1.8"]
+
+[project.urls]
+Homepage = "https://github.com/juanbezerra1/table-audit"
+Issues = "https://github.com/juanbezerra1/table-audit/issues"
+
+[project.scripts]
+table-audit = "table_audit.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/table_audit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["E501"]     # a table written as a string reads better on one long line
+
+[tool.mypy]
+python_version = "3.10"
+strict = true

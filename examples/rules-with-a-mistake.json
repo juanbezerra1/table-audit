@@ -1,0 +1,5 @@
+{
+  "columns": {
+    "age": {"type": "int", "min": 18, "maximum": 90}
+  }
+}
