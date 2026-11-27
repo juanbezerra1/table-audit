@@ -1,0 +1,3 @@
+# Text files are checked out with LF on every system, Windows included: the tests read the example tables of this
+# repository as they are, and a copy that git turned into CRLF would test the conversion, not the program.
+* text=auto eol=lf

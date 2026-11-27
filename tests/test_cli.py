@@ -130,8 +130,9 @@ def test_the_words_for_missing_can_be_replaced(tmp_path: Path, capsys: pytest.Ca
 def test_a_file_with_windows_line_endings_and_a_byte_order_mark_gives_the_same_report(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    text = (EXAMPLES / "participants.csv").read_bytes().decode("utf-8")
-    plain = write(tmp_path, "same.csv", text.replace("\r\n", "\n"))
+    # the example may have been checked out with Windows line endings: start from one kind, so that each copy has one
+    text = (EXAMPLES / "participants.csv").read_bytes().decode("utf-8").replace("\r\n", "\n")
+    plain = write(tmp_path, "same.csv", text)
     windows = write(tmp_path, "same2.csv", b"\xef\xbb\xbf" + text.replace("\n", "\r\n").encode())
     first = run(capsys, "profile", plain)[1]
     second = run(capsys, "profile", windows)[1]
